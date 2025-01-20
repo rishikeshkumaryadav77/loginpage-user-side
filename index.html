@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Login Form</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+       
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="form-title">Login</h1>
+        <form id="loginForm">
+            <input type="text" id="email" placeholder="Email Address" autocomplete="off">
+            <div id="emailError" class="error"></div>
+            <input type="password" id="password" placeholder="Password" autocomplete="off">
+            <div id="pwdError" class="error"></div>
+
+            <button type="submit">Login</button>
+            <div class="loader" id="loader"></div>
+        </form>
+        <div class="extra-links">
+            
+            <span>Don't have an account? <a href="https://rishikeshkumaryadav77.github.io/user-register/">Register</a></span>
+        </div>
+    </div>
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyDW5gelhtKw5M9GuJXmAD6iU-VQlUpDTcU",
+          authDomain: "user-register-5fa92.firebaseapp.com",
+          projectId: "user-register-5fa92",
+          storageBucket: "user-register-5fa92.firebasestorage.app",
+          messagingSenderId: "402921013832",
+          appId: "1:402921013832:web:42847014a2c86dbac6ce7d"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            emailError.textContent = "";
+            pwdError.textContent = "";
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            if (!email) {
+                emailError.textContent = "Email is required.";
+                return;
+            }
+
+            if (!password) {
+                pwdError.textContent = "Password is required.";
+                return;
+            }
+
+            loader.style.display = "block";
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                alert("Login successful!");
+                window.location.href = "https://rishikeshkumaryadav77.github.io/user-register/";
+                // window.location.href ="./user-side/index.html"
+            } catch (error) {
+                loader.style.display = "none";
+                if (error.code === "auth/user-not-found") {
+                    emailError.textContent = "No user found with this email.";
+                } else if (error.code === "auth/wrong-password") {
+                    pwdError.textContent = "Incorrect password.";
+                } else {
+                    alert("Login failed. Please try again.");
+                }
+            }
+        });
+      </script>
+<!-- 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+
+        const firebaseConfig = {
+    apiKey: "AIzaSyDW5gelhtKw5M9GuJXmAD6iU-VQlUpDTcU",
+    authDomain: "user-register-5fa92.firebaseapp.com",
+    projectId: "user-register-5fa92",
+    storageBucket: "user-register-5fa92.firebasestorage.app",
+    messagingSenderId: "402921013832",
+    appId: "1:402921013832:web:42847014a2c86dbac6ce7d"
+  };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+
+        const form = document.getElementById("loginForm");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const emailError = document.getElementById("emailError");
+        const pwdError = document.getElementById("pwdError");
+        const loader = document.getElementById("loader");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            emailError.textContent = "";
+            pwdError.textContent = "";
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            if (!email) {
+                emailError.textContent = "Email is required.";
+                return;
+            }
+
+            if (!password) {
+                pwdError.textContent = "Password is required.";
+                return;
+            }
+
+            loader.style.display = "block";
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                alert("Login successful!");
+                window.location.href = "https://rishikeshkumaryadav77.github.io/user-register/";
+                // window.location.href ="./user-side/index.html"
+            } catch (error) {
+                loader.style.display = "none";
+                if (error.code === "auth/user-not-found") {
+                    emailError.textContent = "No user found with this email.";
+                } else if (error.code === "auth/wrong-password") {
+                    pwdError.textContent = "Incorrect password.";
+                } else {
+                    alert("Login failed. Please try again.");
+                }
+            }
+        });
+    </script> -->
+</body>
+</html>
